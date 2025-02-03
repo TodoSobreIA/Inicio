@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservar Clase - Clases de IA</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="mb-4">Reservar Clase</h1>
+    <p>Seleccione un día y la hora de su preferencia (horario de Madrid: 9:00 a 21:00).</p>
+    <form id="reservation-form">
+      <div class="form-group">
+        <label for="date">Selecciona una fecha:</label>
+        <input type="date" id="date" name="date" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="time">Selecciona una hora:</label>
+        <select id="time" name="time" class="form-control" required></select>
+      </div>
+      <div class="form-group">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Teléfono:</label>
+        <input type="tel" id="phone" name="phone" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-success">Agendar Clase</button>
+    </form>
+  </div>
+
+  <script>
+    const dateInput = document.getElementById('date');
+    const timeSelect = document.getElementById('time');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+
+    function updateTimeOptions() {
+      timeSelect.innerHTML = '';
+      const startHour = 9;
+      const endHour = 21;
+      for (let hour = startHour; hour <= endHour; hour++) {
+        const option = document.createElement('option');
+        option.value = hour;
+        option.textContent = `${hour}:00`;
+        timeSelect.appendChild(option);
+      }
+    }
+
+    dateInput.addEventListener('change', updateTimeOptions);
+    updateTimeOptions();
+
+    document.getElementById('reservation-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  // Construir objeto JSON con los datos del formulario
+  const data = {
+    date: document.getElementById('date').value,
+    time: document.getElementById('time').value,
+    name: document.getElementById('name').value,
+    phone: document.getElementById('phone').value
+  };
+
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbzbsrobbJbLE0D7ibcMJMF7UYc_8X4OqjlP1TrGuljKDf2TZ0uGn5tzcBD6-1pwwhrs5A/exec", {
+  method: "POST", // Añadir el método POST
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(data)
+});
+
+
+    const result = await response.json();
+    console.log("Respuesta del servidor:", result);
+
+    if (result.status === "success") {
+      alert("¡Clase agendada con éxito!");
+      this.reset();
+    } else {
+      alert("Hubo un error al agendar la clase. Mensaje: " + result.message);
+    }
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+    alert("Error de conexión. Intenta nuevamente.");
+  }
+});
+
+  </script>
+</body>
+</html>
