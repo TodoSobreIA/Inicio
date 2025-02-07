@@ -86,7 +86,7 @@
                 let selectedDate = dateInput.value;
                 if (!selectedDate) return;
 
-                fetch(`https://script.google.com/macros/s/AKfycbz6UWpDsAmwk4Oitgf4DP6SFZIU9W9Ed3HTHgDCeBQUIxFQgb152RjAGYF13xvyWpt1HA/exec?date=${selectedDate}`)
+                fetch(`https://script.google.com/macros/s/AKfycbzayMAWpkFs7IH1cy_qeRQvueLJrV4Jq5ijQxCNnDqxE73uRbiTSs1VOxmxoZH_VwvzCw/exec?date=${selectedDate}`)
                     .then(response => response.json())
                     .then(data => generateTimeOptions(data.reserved))
                     .catch(() => alert("Error al verificar disponibilidad"));
@@ -98,7 +98,7 @@
                 let selectedDate = dateInput.value;
                 let selectedTime = timeSelect.value;
 
-                fetch("https://script.google.com/macros/s/AKfycbz6UWpDsAmwk4Oitgf4DP6SFZIU9W9Ed3HTHgDCeBQUIxFQgb152RjAGYF13xvyWpt1HA/exec", {
+                fetch("https://script.google.com/macros/s/AKfycbzayMAWpkFs7IH1cy_qeRQvueLJrV4Jq5ijQxCNnDqxE73uRbiTSs1VOxmxoZH_VwvzCw/exec", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ date: selectedDate, time: selectedTime })
