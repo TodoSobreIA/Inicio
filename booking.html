@@ -4,6 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserva de Cita</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        label, select, input {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
 </head>
 <body>
     <h2>Reserva tu Cita</h2>
@@ -17,49 +51,69 @@
         <button type="submit">Reservar</button>
     </form>
 
+    <p id="message"></p>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let dateInput = document.getElementById("date");
             let timeSelect = document.getElementById("time");
+            let messageBox = document.getElementById("message");
 
             function setMinDate() {
                 let today = new Date();
-                let minDate = today.toISOString().split("T")[0];
-                dateInput.min = minDate;
+                today.setDate(today.getDate() + 1);
+                dateInput.min = today.toISOString().split("T")[0];
             }
 
-            function generateTimeOptions() {
-                timeSelect.innerHTML = ""; // Limpiar opciones previas
-                for (let hour = 0; hour < 24; hour++) {
+            function generateTimeOptions(blockedTimes = []) {
+                timeSelect.innerHTML = "";
+                for (let hour = 8; hour <= 20; hour++) {
                     ["00", "30"].forEach(min => {
-                        let timeOption = document.createElement("option");
                         let timeString = `${String(hour).padStart(2, "0")}:${min}`;
-                        timeOption.value = timeString;
-                        timeOption.textContent = timeString;
-                        timeSelect.appendChild(timeOption);
+                        let nextTime = min === "00" ? `${hour}:30` : `${String(hour + 1).padStart(2, "0")}:00`;
+
+                        if (!blockedTimes.includes(timeString) && !blockedTimes.includes(nextTime)) {
+                            let timeOption = document.createElement("option");
+                            timeOption.value = timeString;
+                            timeOption.textContent = timeString;
+                            timeSelect.appendChild(timeOption);
+                        }
                     });
                 }
             }
 
-            setMinDate();
-            generateTimeOptions();
+            function checkAvailability() {
+                let selectedDate = dateInput.value;
+                if (!selectedDate) return;
+
+                fetch(`https://script.google.com/macros/s/AKfycbz6UWpDsAmwk4Oitgf4DP6SFZIU9W9Ed3HTHgDCeBQUIxFQgb152RjAGYF13xvyWpt1HA/exec?date=${selectedDate}`)
+                    .then(response => response.json())
+                    .then(data => generateTimeOptions(data.reserved))
+                    .catch(() => alert("Error al verificar disponibilidad"));
+            }
 
             document.getElementById("bookingForm").addEventListener("submit", function (event) {
                 event.preventDefault();
 
                 let selectedDate = dateInput.value;
                 let selectedTime = timeSelect.value;
-                let selectedDateTime = `${selectedDate}T${selectedTime}`;
 
-                fetch("https://script.google.com/macros/s/AKfycbwOxjkJtZC4vXEj3WsfKP-La2Oy9rsCjPzcR5Oblg8dhRY8XwbFG-9jCsA3uzofJsxn4g/exec", {
+                fetch("https://script.google.com/macros/s/AKfycbz6UWpDsAmwk4Oitgf4DP6SFZIU9W9Ed3HTHgDCeBQUIxFQgb152RjAGYF13xvyWpt1HA/exec", {
                     method: "POST",
-                    mode: "no-cors",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ datetime: selectedDateTime })
+                    body: JSON.stringify({ date: selectedDate, time: selectedTime })
                 })
-                .then(() => alert("Reserva enviada con éxito"))
+                .then(response => response.json())
+                .then(data => {
+                    messageBox.textContent = data.message;
+                    messageBox.style.color = data.success ? "green" : "red";
+                    checkAvailability();
+                })
                 .catch(() => alert("Error al reservar"));
             });
+
+            setMinDate();
+            dateInput.addEventListener("change", checkAvailability);
         });
     </script>
 </body>
