@@ -1,171 +1,98 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reserva de Cita</title>
+  <meta charset="UTF-8">
+  <title>Reserva con Pago de Prueba</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+    h1 {
       text-align: center;
     }
     form {
-      max-width: 400px;
-      margin: auto;
-      background: #f4f4f4;
-      padding: 20px;
-      border-radius: 8px;
+      margin-bottom: 20px;
     }
-    label, select, input {
+    label {
       display: block;
+      margin-top: 10px;
+    }
+    input, button {
+      font-size: 1em;
+      padding: 8px;
+      margin-top: 5px;
       width: 100%;
-      margin: 10px 0;
+      box-sizing: border-box;
     }
-    button {
-      background: #007bff;
-      color: white;
-      padding: 10px;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-    #message {
-      margin-top: 15px;
-      font-weight: bold;
+    #paypal-button-container {
+      margin-top: 20px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h2>Reserva tu Cita</h2>
-  <form id="bookingForm">
-    <fieldset>
-      <legend>Selecciona fecha y hora</legend>
-      <label for="date">Elige una fecha:</label>
-      <input type="date" id="date" name="date" required />
-      
-      <label for="time">Elige una hora:</label>
-      <select id="time" name="time" required></select>
-    </fieldset>
-    <button type="submit">Reservar</button>
+  <h1>Reserva tu clase</h1>
+  
+  <!-- Formulario de Reserva -->
+  <form id="reservation-form" action="https://formspree.io/f/xeoezzvo" method="POST">
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha" name="fecha" required>
+    
+    <label for="hora">Hora:</label>
+    <!-- Se limita la hora entre 09:00 y 21:00 en intervalos de 30 minutos -->
+    <input type="time" id="hora" name="hora" min="09:00" max="21:00" step="1800" required>
+    
+    <!-- Botón de envío deshabilitado hasta que se realice el pago -->
+    <button type="submit" id="submit-btn" disabled>Enviar Reserva</button>
   </form>
 
-  <p id="message" aria-live="polite"></p>
+  <!-- Contenedor para el botón de PayPal -->
+  <div id="paypal-button-container"></div>
 
+  <!-- SDK de PayPal en modo Sandbox: Reemplaza TU_SANDBOX_CLIENT_ID por el Client ID de tu entorno Sandbox -->
+  <script src="https://www.paypal.com/sdk/js?client-id=Aeg6akUsFj-zocrNojqkqRi14XgouBiQWMosMd5qUGbOn1pMJxoDu9JfgMhZqyJnvHgP5yO1qMvRHDhH&currency=USD"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const dateInput = document.getElementById("date");
-      const timeSelect = document.getElementById("time");
-      const messageBox = document.getElementById("message");
+    // Monto a pagar (ajusta el valor si lo deseas)
+    const paymentAmount = '10.00';
 
-      // URL de tu Google Apps Script
-      const scriptUrl = "https://script.google.com/macros/s/AKfycby6y4-eRWQLRQJZPXp8AjnEyz6h8Njt2L3GNe3kidQNbYncUZp8HDQuUv4epLIxjAzQaA/exec";
-
-      // Configura la fecha mínima (mañana) para evitar que se seleccione el día actual
-      function setMinDate() {
-        const today = new Date();
-        today.setDate(today.getDate() + 1);
-        const minDate = today.toISOString().split("T")[0];
-        dateInput.min = minDate;
-        dateInput.value = minDate;
-      }
-      setMinDate();
-
-      // Función auxiliar que suma 30 minutos a una hora (en formato "HH:MM")
-      // Devuelve null si el resultado queda fuera del rango permitido (08:00 a 20:00)
-      function addHalfHour(timeStr) {
-        let [hour, minute] = timeStr.split(":").map(Number);
-        minute += 30;
-        if (minute === 60) {
-          minute = 0;
-          hour += 1;
-        }
-        if (hour > 20 || (hour === 20 && minute > 0)) {
-          return null;
-        }
-        return `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
-      }
-
-      // Consulta las reservas para la fecha seleccionada (se asume que tu endpoint GET responde con JSON)
-      async function fetchBookings(selectedDate) {
-        try {
-          const response = await fetch(`${scriptUrl}?action=getBookings&date=${selectedDate}`);
-          if (!response.ok) {
-            throw new Error("Error en la respuesta de red");
-          }
-          const data = await response.json();
-          // Se asume que data.bookings es un arreglo con horas en formato "HH:MM"
-          return data.bookings || [];
-        } catch (error) {
-          console.error("Error al obtener las reservas:", error);
-          return [];
-        }
-      }
-
-      // Actualiza las opciones de hora disponibles según las reservas obtenidas del servidor
-      async function updateTimeOptions() {
-        const selectedDate = dateInput.value;
-        timeSelect.innerHTML = ""; // Limpiar el selector
-        const blocked = new Set();
-
-        const bookings = await fetchBookings(selectedDate);
-        bookings.forEach((time) => {
-          blocked.add(time);
-          const nextTime = addHalfHour(time);
-          if (nextTime) {
-            blocked.add(nextTime);
-          }
-        });
-
-        // Genera las ranuras de 08:00 a 20:00 en intervalos de 30 minutos
-        for (let hour = 8; hour <= 20; hour++) {
-          for (let min of ["00", "30"]) {
-            const timeString = `${String(hour).padStart(2, "0")}:${min}`;
-            if (!blocked.has(timeString)) {
-              const option = document.createElement("option");
-              option.value = timeString;
-              option.textContent = timeString;
-              timeSelect.appendChild(option);
+    paypal.Buttons({
+      // Crear la orden de pago
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: paymentAmount
             }
-          }
-        }
+          }]
+        });
+      },
+      // Ejecutar cuando el pago sea aprobado
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          // Notifica al usuario que el pago se completó correctamente
+          alert('¡Pago completado, ' + details.payer.name.given_name + '! Ahora puedes enviar tu reserva.');
+
+          // Opcional: Añadir un campo oculto con el ID de la transacción para guardar la referencia
+          const form = document.getElementById('reservation-form');
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'paymentID';
+          input.value = data.orderID;
+          form.appendChild(input);
+
+          // Habilitar el botón de envío del formulario
+          document.getElementById('submit-btn').disabled = false;
+        });
+      },
+      // Manejo de errores
+      onError: function(err) {
+        console.error('Error en el pago:', err);
+        alert('Ocurrió un error durante el pago. Por favor, inténtalo nuevamente.');
       }
-
-      // Actualiza las opciones de hora cada vez que se cambia la fecha
-      dateInput.addEventListener("change", updateTimeOptions);
-      updateTimeOptions();
-
-      // Maneja el envío del formulario para registrar una reserva
-      document.getElementById("bookingForm").addEventListener("submit", async function (event) {
-        event.preventDefault();
-
-        const selectedDate = dateInput.value;
-        const selectedTime = timeSelect.value;
-        const selectedDateTime = `${selectedDate}T${selectedTime}`;
-
-        try {
-          // Se realiza la solicitud POST en modo "no-cors" para evitar errores de CORS.
-          // La respuesta será opaca, por lo que se asume que la reserva fue exitosa.
-          await fetch(scriptUrl, {
-            method: "POST",
-            mode: "no-cors", // Evita el error de CORS (respuesta opaca)
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ datetime: selectedDateTime, action: "book" })
-          });
-          messageBox.textContent = "Reserva enviada con éxito ✅";
-          messageBox.style.color = "green";
-          // Actualiza las opciones de hora tras la reserva
-          await updateTimeOptions();
-          setTimeout(() => { messageBox.textContent = ""; }, 3000);
-        } catch (error) {
-          console.error("Error al realizar la reserva:", error);
-          messageBox.textContent = "Error al reservar ❌";
-          messageBox.style.color = "red";
-        }
-      });
-    });
+    }).render('#paypal-button-container'); // Renderiza el botón en el contenedor
   </script>
 </body>
 </html>
