@@ -2,80 +2,165 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Reserva con Pago de Prueba</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reserva tu Clase | Todo Sobre IA</title>
+  
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  
   <style>
     body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 20px auto;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+      padding-top: 60px;
+    }
+
+    /* Barra de navegación fija */
+    .top-bar {
+      background-color: #2c2c36;
       padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
     }
-    h1 {
+
+    .top-bar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background-color: #444450;
+      transition: background 0.3s;
+    }
+
+    .top-bar a:hover {
+      background-color: #565667;
+    }
+
+    /* Estilos del formulario */
+    .form-container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-container h1 {
       text-align: center;
-    }
-    form {
+      font-size: 1.8rem;
       margin-bottom: 20px;
     }
+
     label {
-      display: block;
+      font-weight: 500;
       margin-top: 10px;
     }
-    input, button {
+
+    input, textarea, button {
       font-size: 1em;
       padding: 8px;
       margin-top: 5px;
       width: 100%;
       box-sizing: border-box;
     }
+
+    textarea {
+      resize: none;
+    }
+
     #paypal-button-container {
       margin-top: 20px;
       text-align: center;
     }
+
+    /* Botón de volver al inicio */
+    .back-to-home {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #333;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .back-to-home:hover {
+      color: #007bff;
+    }
   </style>
 </head>
 <body>
-  <h1>Reserva tu clase</h1>
-  
-  <!-- Formulario de Reserva -->
-  <form id="reservation-form" action="https://formspree.io/f/xeoezzvo" method="POST">
-    <label for="fecha">Fecha:</label>
-    <input type="date" id="fecha" name="fecha" required>
-    
-    <label for="hora">Hora:</label>
-    <!-- Se limita la hora entre 09:00 y 21:00 en intervalos de 30 minutos -->
-    <input type="time" id="hora" name="hora" min="09:00" max="21:00" step="1800" required>
-    
-    <!-- Botón de envío deshabilitado hasta que se realice el pago -->
-    <button type="submit" id="submit-btn" disabled>Enviar Reserva</button>
-  </form>
 
-  <!-- Contenedor para el botón de PayPal -->
-  <div id="paypal-button-container"></div>
+  <!-- Barra de navegación fija -->
+  <div class="top-bar">
+    <a href="index.html">Inicio</a>
+    <a href="cursos-online.html">Accede a Cursos Online</a>
+    <a href="descargas.html">Descarga Plantillas y Scripts</a>
+  </div>
 
-  <!-- SDK de PayPal en modo Sandbox: Reemplaza TU_SANDBOX_CLIENT_ID por el Client ID de tu entorno Sandbox -->
+  <!-- Contenedor del formulario -->
+  <div class="form-container">
+    <h1>Reserva tu Clase</h1>
+    
+    <form id="reservation-form" action="https://formspree.io/f/xeoezzvo" method="POST">
+      
+      <label for="email">Correo electrónico:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="telefono">Teléfono (Opcional - WhatsApp/Telegram):</label>
+      <input type="tel" id="telefono" name="telefono" placeholder="Ej: +34 612345678">
+      
+      <label for="fecha">Fecha:</label>
+      <input type="date" id="fecha" name="fecha" required>
+      
+      <label for="hora">Hora:</label>
+      <input type="time" id="hora" name="hora" min="09:00" max="21:00" step="1800" required>
+
+      <label for="descripcion">Describe lo que necesitas:</label>
+      <textarea id="descripcion" name="descripcion" rows="4" required placeholder="Ej: Aprender IA desde cero, Aprender a Humanizar textos, Crear GPTs personalizados, o lo que necesites..."></textarea>
+      
+      <!-- Botón de envío deshabilitado hasta que se realice el pago -->
+      <button type="submit" id="submit-btn" class="btn btn-primary w-100 mt-3" disabled>Enviar Reserva</button>
+    </form>
+
+    <!-- Contenedor para el botón de PayPal -->
+    <div id="paypal-button-container"></div>
+
+    <!-- Botón de volver al inicio -->
+    <a href="index.html" class="back-to-home"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+  </div>
+
+  <!-- SDK de PayPal en modo Sandbox -->
   <script src="https://www.paypal.com/sdk/js?client-id=AT7uY45j9iPLT3CBh8SOAwvp281DF-Buip9vJGa9SuQWJszWF1Orm467o_RoeDiOXi0chI071MUh1bsa&currency=EUR"></script>
   <script>
-    // Monto a pagar (ajusta el valor si lo deseas)
     const paymentAmount = '25.00';
 
     paypal.Buttons({
-      // Crear la orden de pago
       createOrder: function(data, actions) {
         return actions.order.create({
           purchase_units: [{
-            amount: {
-              value: paymentAmount
-            }
+            amount: { value: paymentAmount }
           }]
         });
       },
-      // Ejecutar cuando el pago sea aprobado
       onApprove: function(data, actions) {
         return actions.order.capture().then(function(details) {
-          // Notifica al usuario que el pago se completó correctamente
           alert('¡Pago completado, ' + details.payer.name.given_name + '! Ahora puedes enviar tu reserva.');
 
-          // Opcional: Añadir un campo oculto con el ID de la transacción para guardar la referencia
+          // Agregar ID de pago al formulario
           const form = document.getElementById('reservation-form');
           const input = document.createElement('input');
           input.type = 'hidden';
@@ -83,16 +168,19 @@
           input.value = data.orderID;
           form.appendChild(input);
 
-          // Habilitar el botón de envío del formulario
+          // Habilitar el botón de envío
           document.getElementById('submit-btn').disabled = false;
         });
       },
-      // Manejo de errores
       onError: function(err) {
         console.error('Error en el pago:', err);
         alert('Ocurrió un error durante el pago. Por favor, inténtalo nuevamente.');
       }
-    }).render('#paypal-button-container'); // Renderiza el botón en el contenedor
+    }).render('#paypal-button-container');
   </script>
+
+  <!-- Bootstrap Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
