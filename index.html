@@ -10,15 +10,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <!-- Font Awesome para iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
   <style>
+    /* Estilos generales */
     body {
       font-family: 'Roboto', sans-serif;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       color: #333;
-      padding-top: 60px; /* Ajuste para la barra fija */
+      padding-top: 60px;
     }
 
-    /* Barra de botones fija */
+    /* Barra de navegación fija */
     .top-bar {
       background-color: #2c2c36;
       padding: 10px;
@@ -46,35 +48,37 @@
       background-color: #565667;
     }
 
-    /* Hero Section con fondo actualizado */
+    /* Hero Section */
     .hero {
       background: url('images/background2.jpg') no-repeat center center;
       background-size: cover;
-      height: 350px;
+      height: 40vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: white;
       text-align: center;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Hace el texto más visible */
+      color: white;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+      padding: 30px;
     }
 
     .hero h1 {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: bold;
     }
 
     .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 15px;
+      font-size: 1rem;
+      margin-bottom: 10px;
     }
 
-    /* Redes sociales en horizontal con efecto hover */
+    /* Redes sociales */
     .social-buttons {
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-top: 10px;
     }
 
@@ -84,12 +88,12 @@
       justify-content: center;
       text-decoration: none;
       font-weight: bold;
-      padding: 8px 15px;
+      padding: 6px 10px;
       border-radius: 5px;
       color: white;
-      font-size: 14px;
-      width: 150px;
-      gap: 8px;
+      font-size: 13px;
+      width: 130px;
+      gap: 6px;
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
@@ -99,24 +103,35 @@
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     }
 
-    .tiktok { background: #000000; }  /* TikTok negro */
-    .instagram { background: #E1306C; }  /* Instagram rosado */
-    .discord { background: #5865F2; }  /* Discord azul */
-    .youtube { background: #FF0000; }  /* YouTube rojo */
+    .tiktok { background: #000000; }
+    .instagram { background: #E1306C; }
+    .discord { background: #5865F2; }
+    .youtube { background: #FF0000; }
 
+    /* Ajustes responsivos */
     @media (max-width: 768px) {
-      .top-bar {
-        flex-direction: column;
-        align-items: center;
+      .hero {
+        height: 50vh;
+        padding: 20px;
+      }
+
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .hero p {
+        font-size: 0.9rem;
       }
 
       .social-buttons {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        justify-content: center;
       }
 
       .social-buttons a {
-        width: 100%;
+        width: 110px;
+        padding: 5px 8px;
+        font-size: 12px;
       }
     }
 
@@ -126,6 +141,7 @@
       flex-wrap: wrap;
       justify-content: space-between;
       padding: 20px;
+      min-height: 80vh;
     }
 
     .youtube-section {
@@ -141,25 +157,24 @@
       border-radius: 8px;
       text-align: center;
     }
-
   </style>
 </head>
 <body>
 
-  <!-- ZONA ROJA: Barra de botones fija -->
+  <!-- Barra de navegación fija -->
   <div class="top-bar">
     <a href="booking.html">Reserva tu Clase Individual</a>
-    <a href="cursos-online.html">Accede a Cursos Online</a>
-    <a href="descargas.html">Descarga Plantillas y Scripts</a>
+    <a href="https://www.youtube.com/playlist?list=PLWb26fiXZci1EcLpFe1RWS2AVNw-z4zpE" target="_blank">Accede a Cursos Online</a>
+    <a href="https://buymeacoffee.com/todosobreia/extras" target="_blank">Descarga Plantillas y Scripts</a>
   </div>
 
-  <!-- Hero Section con fondo actualizado -->
+  <!-- Hero Section -->
   <section class="hero text-center">
     <div class="container">
       <h1>Todo Sobre IA</h1>
       <p>Aprende Inteligencia Artificial de forma práctica y personalizada</p>
 
-      <!-- Redes sociales en horizontal (centradas) -->
+      <!-- Redes sociales -->
       <div class="social-buttons">
         <a href="https://www.tiktok.com/@todosobreia_yt" target="_blank" class="tiktok">
           <i class="fa-brands fa-tiktok"></i> TikTok
@@ -177,26 +192,21 @@
     </div>
   </section>
 
-  <!-- Sección Amarilla y Verde -->
+  <!-- Contenido -->
   <div class="container mt-5">
     <div class="content-wrapper">
-      
-      <!-- ZONA AMARILLA: Video de YouTube -->
       <div class="youtube-section">
         <h3>📺 Último Video en YouTube</h3>
         <iframe width="100%" height="315" src="https://www.youtube.com/embed/adhTWmWSjyY" frameborder="0" allowfullscreen></iframe>
       </div>
 
-      <!-- ZONA VERDE: Espacio reservado -->
       <div class="sidebar">
         <h3>🛠️ Espacio en Construcción</h3>
         <p>Aquí puedes agregar más información, enlaces o cualquier otro contenido en el futuro.</p>
       </div>
-    
     </div>
   </div>
 
-  <!-- Bootstrap Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
