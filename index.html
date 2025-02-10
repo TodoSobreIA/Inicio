@@ -2,18 +2,69 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Clases de IA para Principiantes</title>
-  <!-- Uso de Bootstrap para estilos rápidos (opcional) -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    /* Sección hero para un toque moderno */
+    .hero {
+      background: url('images/background.png') no-repeat center center;
+      background-size: cover;
+      padding: 100px 0;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    @media (min-width: 768px) {
+      .hero h1 {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="container mt-5">
-    <h1 class="mb-4">Clases de IA para Principiantes</h1>
-    <p>Ofrecemos clases personalizadas de Inteligencia Artificial para principiantes a un precio de <strong>25 €/h</strong>.</p>
-    <p><em>Horario de atención: de 9:00 a 21:00 (hora de Madrid)</em></p>
-    <!-- Botón para pasar a la página de reserva -->
-    <a href="booking.html" class="btn btn-primary">Reservar Clase</a>
+  <!-- Sección hero opcional -->
+  <section class="hero d-flex align-items-center justify-content-center text-center">
+    <div class="container">
+      <h1>Todo Sobre IA</h1>
+      <p class="lead">Aprende Inteligencia Artificial de forma práctica y personalizada</p>
+    </div>
+  </section>
+
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <p class="card-text">
+              Ofrecemos clases personalizadas de Inteligencia Artificial para principiantes a un precio de <strong>25 €/h</strong>.
+            </p>
+            <p class="card-text">
+              <em>Horario de atención: de 9:00 a 21:00 (hora de Madrid)</em>
+            </p>
+            <div class="d-grid">
+              <a href="booking.html" class="btn btn-primary btn-lg">Reservar Clase</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Bootstrap Bundle con Popper (opcional para componentes interactivos) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
