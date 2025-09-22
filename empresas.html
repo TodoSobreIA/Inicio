@@ -35,6 +35,8 @@
       color: var(--text);
       padding-top: 70px;
     }
+
+    /* Navbar glass */
     .top-bar{
       background: rgba(20,22,30,.6);
       backdrop-filter: blur(10px);
@@ -56,6 +58,8 @@
       display: inline-flex; align-items: center; gap: 8px;
     }
     .top-bar a:hover{ box-shadow: var(--glow); border-color: rgba(0,240,255,.35); }
+
+    /* Hero */
     .hero{
       position: relative; isolation:isolate;
       height: 26vh;
@@ -75,9 +79,11 @@
       display:inline-block; padding-bottom:.3rem; margin-bottom:.4rem;
     }
     .hero p{ color:#cfd8e3; margin:0; }
-    .wrap{
-      max-width:1100px; margin: 26px auto; padding: 0 12px;
-    }
+
+    /* Contenedor */
+    .wrap{ max-width:1100px; margin: 26px auto; padding: 0 12px; }
+
+    /* Secciones/carts */
     .section{
       background: var(--card);
       border: 1px solid var(--line);
@@ -89,6 +95,28 @@
       font-weight:800; letter-spacing:.3px; display:flex; align-items:center; gap:10px;
     }
     .muted{ color: var(--muted); }
+
+    /* Grid de servicios (3 columnas) */
+    .services{
+      display:grid; gap:16px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .cardx{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      height: 100%;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .cardx:hover{ transform: translateY(-2px); box-shadow: var(--glow); border-color: rgba(0,240,255,.25); }
+    .cardx h3{ font-weight:700; margin-bottom:8px; display:flex; gap:8px; align-items:center; }
+
+    @media (max-width: 992px){
+      .services{ grid-template-columns: 1fr; }
+    }
+
+    /* Botones y formulario */
     .btn-neon{
       background: linear-gradient(90deg, var(--acc), var(--acc2));
       color:#000; font-weight:800; border:0; border-radius:12px;
@@ -109,11 +137,7 @@
       padding:10px 12px;
       width:100%;
     }
-    form select option {
-      background: #0b0f17;
-      color: var(--text);
-    }
-    .help{ color: var(--muted); font-size:.9rem; }
+    form select option { background: #0b0f17; color: var(--text); }
   </style>
 </head>
 <body>
@@ -136,7 +160,7 @@
 
   <main class="wrap">
 
-    <!-- Servicios -->
+    <!-- Servicios (3 columnas) -->
     <section class="section">
       <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Servicios</h2>
       <div class="services mt-3">
@@ -177,7 +201,7 @@
       <h2><i class="fa-solid fa-phone-volume"></i> ¿Te contactamos por WhatsApp?</h2>
       <p class="muted mb-2">Deja tu número y dinos en qué horario prefieres.</p>
 
-      <form action="https://formsubmit.co/tu-email@dominio.com" method="POST" class="mt-2">
+      <form action="https://formsubmit.co/aprendecondanielyt" method="POST" class="mt-2">
         <div class="row g-3">
           <div class="col-md-6">
             <label for="nombre" class="form-label">Nombre y apellidos</label>
@@ -206,9 +230,10 @@
           </div>
         </div>
 
+        <!-- Configuración FormSubmit -->
         <input type="hidden" name="_subject" value="Nuevo lead de EMPRESAS (web)" />
         <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://tusitio.github.io/gracias.html">
+        <input type="hidden" name="_next" value="https://todosobreia.github.io/Inicio/empresas.html">
 
         <div class="form-check mt-3">
           <input class="form-check-input" type="checkbox" value="ok" id="permiso" name="permiso" required />
