@@ -1,235 +1,244 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Todo Sobre IA</title>
+
   <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome (íconos) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
   <style>
-    /* Estilos generales */
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      color: #333;
-      padding-top: 60px;
+    /* ========= Tokens y base ========= */
+    :root{
+      --bg: #0b0f17;
+      --card: rgba(255,255,255,0.06);
+      --text: #e6e9ef;
+      --muted: #93a1b1;
+      --line: rgba(255,255,255,0.08);
+      --acc: #00f0ff;     /* cian */
+      --acc2:#8a2be2;     /* morado */
+      --glow: 0 0 32px rgba(0,240,255,.35);
     }
+    *{ box-sizing: border-box; }
+    body{
+      font-family: 'Inter','Roboto',system-ui, sans-serif;
+      background:
+        radial-gradient(1200px 800px at 80% -10%, rgba(0,240,255,.08), transparent 60%),
+        radial-gradient(900px 600px at 10% 110%, rgba(138,43,226,.10), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      padding-top: 70px; /* espacio para la top-bar fija */
+    }
+    a{ color: inherit; }
 
-    /* Barra de navegación fija */
-    .top-bar {
-      background-color: #2c2c36;
+    /* ========= Navbar “glass” ========= */
+    .top-bar{
+      background: rgba(20,22,30,.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
       padding: 10px;
       display: flex;
       justify-content: center;
       gap: 10px;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      z-index: 1000;
+      position: fixed; top:0; left:0; width:100%; z-index:1000;
     }
-
-    .top-bar a {
-      color: white;
+    .top-bar a{
+      color: var(--text);
       text-decoration: none;
-      font-weight: 500;
-      padding: 12px 18px;
-      border-radius: 5px;
-      background-color: #444450;
-      transition: background 0.3s;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 150px;
+      font-weight: 600;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid var(--line);
+      display: inline-flex; align-items: center; gap: 8px;
     }
+    .top-bar a:hover{ box-shadow: var(--glow); border-color: rgba(0,240,255,.35); }
 
-    .top-bar a:hover { background-color: #565667; }
+    .btn-neon{
+        background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+        border: 1px solid var(--line);
+        color: var(--text);
+        font-weight: 800;
+        border-radius: 12px;
+        transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+      }
 
-    /* Botón "Cambiar tipo de usuario" con estilo más discreto */
-    .switch-profile {
-      background: transparent !important;
-      border: 1px solid rgba(255,255,255,0.25);
-      min-width: auto;
-      padding: 8px 12px;
-      font-size: 0.9rem;
-    }
-    .switch-profile:hover {
-      background: rgba(255,255,255,0.08) !important;
-    }
-
-    /* Hero Section */
-    .hero {
+      /* Efecto neón SOLO al hover */
+      .btn-neon:hover{
+        background: linear-gradient(90deg, var(--acc), var(--acc2));
+        color: #000;
+        box-shadow: 0 12px 28px rgba(138,43,226,.28);
+        border-color: rgba(0,240,255,.35);
+        transform: translateY(-1px) scale(1.01);
+      }
+    /* ========= Hero ========= */
+    .hero{
       background: url('images/background2.jpg') no-repeat center center;
       background-size: cover;
-      height: 30vh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; color: white;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
-      padding: 20px 10px;
-    }
-
-    @media (max-width: 768px) {
-      .hero { height: 35vh; padding: 15px; }
-      .hero h1 { font-size: 1.8rem; }
-      .hero p { font-size: 0.9rem; }
-    }
-
-    /* Redes sociales */
-    .social-buttons {
-      display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 10px;
-    }
-    .social-buttons a {
+      height: 32vh;
       display: flex; align-items: center; justify-content: center;
-      text-decoration: none; font-weight: bold; padding: 6px 10px; border-radius: 5px;
-      color: white; font-size: 13px; width: 130px; gap: 6px;
-      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+      position: relative; isolation:isolate;
+      padding: 20px 10px;
+      color: #fff;
     }
-    .social-buttons a:hover { transform: scale(1.1); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-    .tiktok { background:#000; } .instagram { background:#E1306C; }
-    .discord { background:#5865F2; } .youtube { background:#FF0000; }
-
-    /* Contenido Principal */
-    .content-wrapper { display:flex; flex-wrap:wrap; justify-content:space-between; padding:20px; min-height:70vh; }
-    .youtube-section { flex:2; text-align:center; }
-    .sidebar { flex:1; background:#e3e3e3; padding:20px; min-height:300px; border-radius:8px; text-align:center; }
-
-    /* Estilos del modal */
-    .modal-header {
-      background: #2c2c36; color: #fff;
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(40% 60% at 50% 20%, rgba(0,240,255,.15), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.65));
+      z-index:-1;
     }
-    .modal-title i { margin-right: .5rem; }
-    .modal-body p { margin-bottom: 1rem; }
-    .perfil-btn {
-      padding: 12px 18px;
-      font-weight: 600;
+    .hero h1{
+      font-family:'Space Grotesk', sans-serif;
+      letter-spacing:.5px;
+      text-shadow: 0 0 8px rgba(0,240,255,.45);
+      border-bottom: 1px dashed rgba(255,255,255,.2);
+      display:inline-block; padding-bottom:.3rem;
+      animation: floaty 6s ease-in-out infinite;
+    }
+    .hero p{ color:#cfd8e3; margin: .4rem 0 0; }
+
+    @keyframes floaty{ 0%{transform:translateY(0)} 50%{transform:translateY(-6px)} 100%{transform:translateY(0)} }
+
+    @media (max-width: 768px){
+      .hero{ height: 38vh; }
+      .hero h1{ font-size: 1.8rem; }
+      .hero p{ font-size: .95rem; }
+    }
+
+    /* ========= Redes ========= */
+    .social-buttons{
+      display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:12px;
+    }
+    .social-buttons a{
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: 10px;
+      padding: 8px 10px;
+      display:flex; align-items:center; gap:8px;
+      transition: transform .15s ease, box-shadow .15s ease;
     }
+    .social-buttons a:hover{ transform: translateY(-1px); box-shadow: var(--glow); }
+    .social-buttons a span{ display:none; } /* icon-only look */
+
+    /* ========= Contenido ========= */
+    .content-wrapper{
+      display:flex; flex-wrap:wrap; justify-content:space-between;
+      gap:24px; padding: 24px 0; min-height: 60vh;
+    }
+    .youtube-section, .sidebar{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .youtube-section{ flex: 2 1 560px; }
+    .sidebar{ flex: 1 1 320px; }
+
+    .section-title{
+      font-weight: 800; letter-spacing:.3px; margin-bottom: 14px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .section-title i{ color: var(--acc); text-shadow: var(--glow); }
+
+    /* Vídeo responsive con borde sutil */
+    .ratio-yt{ border-radius:14px; overflow:hidden; border:1px solid var(--line); }
+
+    /* ========= Footer ========= */
+    footer{
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+    footer a{ color: var(--text); text-decoration: underline dotted; }
   </style>
 </head>
 <body>
 
-  <!-- Barra de navegación fija -->
+  <!-- NAV SUPERIOR -->
   <div class="top-bar">
-    <a href="booking.html">Reserva tu Clase Individual</a>
-    <a href="https://www.udemy.com/user/daniel-garcia-1325/" target="_blank">Accede a Cursos Online</a>
-    <a href="https://buymeacoffee.com/todosobreia/extras" target="_blank">Descarga Plantillas y Scripts</a>
-    <!-- Enlace para cambiar la elección -->
-    <a href="#" id="clearPerfil" class="switch-profile" title="Cambiar tipo de usuario">
-      <i class="fa-solid fa-user-gear me-1"></i> Cambiar tipo de usuario
+    <a href="booking.html" class="btn-neon" aria-label="Reservar clase individual"><i class="fa-solid fa-calendar-check"></i> Reserva tu Clase</a>
+    <a href="https://www.udemy.com/user/daniel-garcia-1325/" target="_blank" aria-label="Accede a cursos online"><i class="fa-solid fa-graduation-cap"></i> Cursos Online</a>
+    <a href="https://buymeacoffee.com/todosobreia/extras" target="_blank" aria-label="Descarga plantillas y scripts"><i class="fa-solid fa-download"></i> Plantillas & Scripts</a>
+    <!-- Botón para pasar a Empresas -->
+    <a href="#" id="btnToEmpresa" class="" title="Cambiar a Empresas" aria-label="Cambiar a Empresas">
+      <i class="fa-solid fa-building"></i> Cambiar a Empresas
     </a>
   </div>
 
-  <!-- Hero Section -->
-  <section class="hero text-center" aria-label="Cabecera principal">
+  <!-- HERO -->
+  <section class="hero">
     <div class="container">
       <h1>Todo Sobre IA</h1>
       <p>Aprende Inteligencia Artificial de forma práctica y personalizada</p>
 
-      <!-- Redes sociales -->
+      <!-- Redes -->
       <div class="social-buttons" aria-label="Redes sociales">
-        <a href="https://www.tiktok.com/@todosobreia_yt" target="_blank" class="tiktok" aria-label="TikTok">
-          <i class="fa-brands fa-tiktok"></i> TikTok
+        <a href="https://www.tiktok.com/@todosobreia_yt" target="_blank" title="TikTok" aria-label="TikTok">
+          <i class="fa-brands fa-tiktok"></i><span>TikTok</span>
         </a>
-        <a href="https://www.instagram.com/todosobreia_yt/" target="_blank" class="instagram" aria-label="Instagram">
-          <i class="fa-brands fa-instagram"></i> Instagram
+        <a href="https://www.instagram.com/todosobreia_yt/" target="_blank" title="Instagram" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i><span>Instagram</span>
         </a>
-        <a href="https://discord.com/channels/1324413163785031752/1324413164221108317" target="_blank" class="discord" aria-label="Discord">
-          <i class="fa-brands fa-discord"></i> Discord
+        <a href="https://discord.com/channels/1324413163785031752/1324413164221108317" target="_blank" title="Discord" aria-label="Discord">
+          <i class="fa-brands fa-discord"></i><span>Discord</span>
         </a>
-        <a href="https://www.youtube.com/@DaniStats" target="_blank" class="youtube" aria-label="YouTube">
-          <i class="fa-brands fa-youtube"></i> YouTube
+        <a href="https://www.youtube.com/@DaniStats" target="_blank" title="YouTube" aria-label="YouTube">
+          <i class="fa-brands fa-youtube"></i><span>YouTube</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Contenido -->
-  <div class="container mt-5">
+  <!-- CONTENIDO -->
+  <div class="container">
     <div class="content-wrapper">
       <div class="youtube-section">
-        <h3>📺 Último Video en YouTube</h3>
-        <iframe width="100%" height="315" src="https://www.youtube.com/embed/adhTWmWSjyY" title="Último vídeo de YouTube" frameborder="0" allowfullscreen></iframe>
+        <h3 class="section-title"><i class="fa-solid fa-tv"></i> Último Video en YouTube</h3>
+        <div class="ratio ratio-16x9 ratio-yt">
+          <iframe src="https://www.youtube.com/embed/adhTWmWSjyY" title="Último video de YouTube" allowfullscreen></iframe>
+        </div>
       </div>
 
-      <div class="sidebar">
-        <h3>🛠️ Espacio en Construcción</h3>
-        <p>Aquí puedes agregar más información, enlaces o cualquier otro contenido en el futuro.</p>
-      </div>
+      <aside class="sidebar">
+        <h3 class="section-title"><i class="fa-solid fa-screwdriver-wrench"></i> Espacio en Construcción</h3>
+        <p style="color:var(--muted)">Aquí puedes agregar más información, enlaces o cualquier otro contenido en el futuro.</p>
+      </aside>
     </div>
   </div>
 
-  <!-- Modal de selección de perfil -->
-  <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content shadow">
-        <div class="modal-header">
-          <h5 class="modal-title" id="perfilModalLabel">
-            <i class="fa-solid fa-user-check"></i> ¿Cómo quieres navegar?
-          </h5>
-        </div>
-        <div class="modal-body">
-          <p>Elige una opción para adaptar el contenido:</p>
-          <div class="d-flex flex-column flex-sm-row gap-3 justify-content-between">
-            <button id="btnParticular" type="button" class="btn btn-success w-100 perfil-btn">
-              <i class="fa-solid fa-user"></i> Soy Particular
-            </button>
-            <button id="btnEmpresa" type="button" class="btn btn-primary w-100 perfil-btn">
-              <i class="fa-solid fa-building"></i> Soy Empresa
-            </button>
-          </div>
-          <small class="d-block mt-3 text-muted">
-            Guardaremos tu elección para las próximas visitas. Puedes cambiarla desde “Cambiar tipo de usuario”.
-          </small>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- FOOTER -->
+  <footer class="container text-center py-4">
+    <small>© <span id="year"></span> Todo Sobre IA · <a href="https://www.youtube.com/@DaniStats" target="_blank" rel="noopener">YouTube</a> · <a href="mailto:tuemail@dominio.com">Contacto</a></small>
+  </footer>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Lógica de selección de perfil
-    document.addEventListener('DOMContentLoaded', function () {
-      const perfilGuardado = localStorage.getItem('perfil');
+    // Año dinámico en footer
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-      // Si ya eligió "empresa", redirigimos directamente
-      if (perfilGuardado === 'empresa') {
+    // Si ya eligió "empresa", redirigimos automáticamente
+    (function autoRedirectEmpresa(){
+      const perfil = localStorage.getItem('perfil');
+      if (perfil === 'empresa') {
         window.location.href = 'empresas.html';
-        return;
       }
+    })();
 
-      // Si no hay perfil guardado, mostramos el modal
-      if (!perfilGuardado) {
-        const modal = new bootstrap.Modal(document.getElementById('perfilModal'));
-        modal.show();
-      }
-
-      // Botón "Soy Empresa"
-      document.getElementById('btnEmpresa').addEventListener('click', function () {
-        localStorage.setItem('perfil', 'empresa');
-        window.location.href = 'empresas.html';
-      });
-
-      // Botón "Soy Particular"
-      document.getElementById('btnParticular').addEventListener('click', function () {
-        localStorage.setItem('perfil', 'particular');
-        const modalEl = document.getElementById('perfilModal');
-        const modalInst = bootstrap.Modal.getInstance(modalEl);
-        modalInst.hide();
-      });
-
-      // Enlace para cambiar la elección
-      document.getElementById('clearPerfil').addEventListener('click', function (e) {
-        e.preventDefault();
-        localStorage.removeItem('perfil');
-        const modal = new bootstrap.Modal(document.getElementById('perfilModal'));
-        modal.show();
-      });
+    // Botón "Cambiar a Empresas"
+    document.getElementById('btnToEmpresa').addEventListener('click', function(e){
+      e.preventDefault();
+      localStorage.setItem('perfil','empresa');
+      window.location.href = 'empresas.html';
     });
   </script>
 </body>
