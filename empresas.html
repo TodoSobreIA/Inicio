@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Empresas | Todo Sobre IA</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+  <style>
+    :root{
+      --bg: #0b0f17;
+      --card: rgba(255,255,255,0.06);
+      --text: #e6e9ef;
+      --muted: #93a1b1;
+      --line: rgba(255,255,255,0.08);
+      --acc: #00f0ff;
+      --acc2:#8a2be2;
+      --glow: 0 0 32px rgba(0,240,255,.35);
+    }
+    *{ box-sizing: border-box; }
+    body{
+      font-family: 'Inter','Roboto',system-ui,sans-serif;
+      background:
+        radial-gradient(1200px 800px at 80% -10%, rgba(0,240,255,.08), transparent 60%),
+        radial-gradient(900px 600px at 10% 110%, rgba(138,43,226,.10), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      padding-top: 70px;
+    }
+
+    /* Navbar glass */
+    .top-bar{
+      background: rgba(20,22,30,.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      position: fixed; top:0; left:0; width:100%; z-index:1000;
+    }
+    .top-bar a{
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid var(--line);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .top-bar a:hover{ box-shadow: var(--glow); border-color: rgba(0,240,255,.35); }
+
+    /* Hero */
+    .hero{
+      position: relative; isolation:isolate;
+      height: 26vh;
+      display:flex; align-items:center; justify-content:center;
+      text-align:center; color:#fff; padding:20px 10px;
+      background:
+        radial-gradient(1200px 600px at 10% 20%, rgba(0,240,255,.20), transparent 60%),
+        radial-gradient(900px 500px at 90% 30%, rgba(138,43,226,.18), transparent 60%),
+        linear-gradient(180deg,#0b0f17,#0b0f17);
+      overflow:hidden;
+    }
+    .hero h1{
+      font-family:'Space Grotesk',sans-serif;
+      font-weight:800; letter-spacing:.4px;
+      text-shadow: 0 0 8px rgba(0,240,255,.45);
+      border-bottom: 1px dashed rgba(255,255,255,.2);
+      display:inline-block; padding-bottom:.3rem; margin-bottom:.4rem;
+    }
+    .hero p{ color:#cfd8e3; margin:0; }
+
+    /* Secciones/carts */
+    .wrap{
+      max-width:1100px; margin: 26px auto; padding: 0 12px;
+    }
+    .section{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 22px;
+    }
+    .section h2{
+      font-weight:800; letter-spacing:.3px; display:flex; align-items:center; gap:10px;
+    }
+    .pill{
+      display:inline-block; padding:6px 10px; border-radius:999px;
+      background: rgba(255,255,255,.06); border:1px solid var(--line);
+      font-size:.9rem; color:var(--muted); margin-right:8px; margin-bottom:8px;
+    }
+
+    /* Grid de servicios */
+    .services{
+      display:grid; gap:16px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .cardx{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      height: 100%;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .cardx:hover{ transform: translateY(-2px); box-shadow: var(--glow); border-color: rgba(0,240,255,.25); }
+    .cardx h3{ font-weight:700; margin-bottom:8px; display:flex; gap:8px; align-items:center; }
+    .muted{ color: var(--muted); }
+
+    @media (max-width: 992px){
+      .services{ grid-template-columns: 1fr; }
+    }
+
+    /* Contacto (botones y formulario) */
+    .btn-neon{
+      background: linear-gradient(90deg, var(--acc), var(--acc2));
+      color:#000; font-weight:800; border:0; border-radius:12px;
+      box-shadow: 0 8px 24px rgba(0,240,255,.25);
+    }
+    .btn-outline{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid var(--line);
+      color: var(--text);
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    form input, form select, form textarea{
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      color: var(--text);
+      border-radius:10px;
+      padding:10px 12px;
+      width:100%;
+    }
+    form select option {
+      background: #0b0f17;
+      color: var(--text);
+    }
+    .help{ color: var(--muted); font-size:.9rem; }
+
+    .success{
+      display:none; margin-top:12px; padding:12px; border-radius:12px;
+      background: rgba(0,255,170,.1); border:1px solid rgba(0,255,170,.3); color:#aef3d4;
+    }
+    .error{
+      display:none; margin-top:12px; padding:12px; border-radius:12px;
+      background: rgba(255,0,0,.08); border:1px solid rgba(255,0,0,.25); color:#ffb3b3;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="top-bar">
+    <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
+    <a href="booking.html"><i class="fa-solid fa-calendar-check"></i> Reserva tu Clase</a>
+    <a href="https://buymeacoffee.com/todosobreia/extras" target="_blank"><i class="fa-solid fa-download"></i> Plantillas & Scripts</a>
+    <a href="#" id="toParticulares" title="Cambiar a Particulares"><i class="fa-solid fa-user"></i> Ver como Particular</a>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div>
+      <h1>Soluciones de IA para Empresas</h1>
+      <p>Asesoría, docencia y ejecución práctica para impacto real</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Servicios -->
+    <section class="section">
+      <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Servicios</h2>
+      <div class="services mt-3">
+        <div class="cardx">
+          <h3><i class="fa-solid fa-chalkboard-user"></i> Docencia en IA</h3>
+          <p class="muted">Capacitaciones prácticas para equipos: uso de IA en <strong>ofimática</strong>, <strong>productividad</strong> y <strong>docencia</strong>.</p>
+        </div>
+        <div class="cardx">
+          <h3><i class="fa-solid fa-diagram-project"></i> Asesoría e Implementación</h3>
+          <p class="muted">Análisis de procesos, definición de casos de uso y <strong>implementación</strong> de copilots, chatbots y automatizaciones.</p>
+        </div>
+        <div class="cardx">
+          <h3><i class="fa-solid fa-rocket"></i> Ejecución directa</h3>
+          <p class="muted">Soluciones listas para usar: bots de atención, integraciones con CRM/ERP y automatización de reportes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto rápido -->
+    <section class="section">
+      <h2><i class="fa-solid fa-handshake-angle"></i> Contacto rápido</h2>
+      <div class="row g-3 mt-1">
+        <div class="col-md-6">
+          <a class="btn btn-neon w-100" href="mailto:aprendecondanielyt@gmail.com">
+            <i class="fa-solid fa-envelope"></i> Escribir por Email
+          </a>
+        </div>
+        <div class="col-md-6">
+          <a class="btn btn-outline w-100" href="https://wa.me/34621045013?text=Hola%20Dani%2C%20quiero%20informaci%C3%B3n%20sobre%20servicios%20de%20IA%20para%20mi%20empresa." target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp: +34 621045013
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formulario -->
+    <section class="section">
+      <h2><i class="fa-solid fa-phone-volume"></i> ¿Te contactamos por WhatsApp?</h2>
+      <p class="muted mb-2">Deja tu número y dinos en qué horario prefieres.</p>
+
+      <form id="lead-form" action="https://formspree.io/f/xeoezzvo" method="POST" class="mt-2" novalidate>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="nombre" class="form-label">Nombre y apellidos</label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Nombre Apellido" />
+          </div>
+          <div class="col-md-6">
+            <label for="empresa" class="form-label">Empresa (opcional)</label>
+            <input type="text" id="empresa" name="empresa" placeholder="Mi Empresa S.L." />
+          </div>
+          <div class="col-md-6">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" required placeholder="+34 621045013" />
+          </div>
+          <div class="col-md-6">
+            <label for="horario" class="form-label">Horario preferido</label>
+            <select id="horario" name="horario" required>
+              <option value="">Selecciona…</option>
+              <option>Mañana (09:00–13:00)</option>
+              <option>Tarde (13:00–17:00)</option>
+              <option>Últimas horas (17:00–20:00)</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label for="mensaje" class="form-label">¿En qué podemos ayudar?</label>
+            <textarea id="mensaje" name="mensaje" rows="4" placeholder="Formación, implementación de Copilot, automatizaciones..."></textarea>
+          </div>
+        </div>
+
+        <input type="hidden" name="_subject" value="Nuevo lead de EMPRESAS (web)" />
+
+        <div class="form-check mt-3">
+          <input class="form-check-input" type="checkbox" value="ok" id="permiso" required />
+          <label class="form-check-label" for="permiso">
+            Acepto ser contactad@ por WhatsApp.
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-neon mt-3"><i class="fa-solid fa-paper-plane"></i> Enviar</button>
+
+        <div id="okMsg" class="success">¡Gracias! Hemos recibido tus datos y te contactaremos pronto.</div>
+        <div id="errMsg" class="error">Ups, no se pudo enviar. Inténtalo de nuevo más tarde.</div>
+      </form>
+    </section>
+
+    <div class="text-center mt-3">
+      <a href="index.html" class="btn btn-outline"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</a>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('toParticulares').addEventListener('click', function(e){
+      e.preventDefault();
+      localStorage.setItem('perfil','particular');
+      window.location.href = 'index.html';
+    });
+
+    const leadForm = document.getElementById('lead-form');
+    const okMsg = document.getElementById('okMsg');
+    const errMsg = document.getElementById('errMsg');
+
+    leadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try{
+        const data = new FormData(leadForm);
+        const resp = await fetch(leadForm.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if(resp.ok){
+          okMsg.style.display='block';
+          errMsg.style.display='none';
+          leadForm.reset();
+        }else{
+          throw new Error('bad response');
+        }
+      }catch(err){
+        okMsg.style.display='none';
+        errMsg.style.display='block';
+      }
+    });
+  </script>
+</body>
+</html>
