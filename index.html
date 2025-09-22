@@ -8,7 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome para iconos -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   <style>
@@ -26,15 +26,13 @@
       padding: 10px;
       display: flex;
       justify-content: center;
-      gap: 10px; /* Espaciado reducido */
+      gap: 10px;
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       z-index: 1000;
     }
 
-    /* Botones de la barra superior */
     .top-bar a {
       color: white;
       text-decoration: none;
@@ -47,101 +45,69 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 150px; /* Tamaño fijo para mejor alineación */
+      min-width: 150px;
     }
 
-    /* Hover efecto */
-    .top-bar a:hover {
-      background-color: #565667;
+    .top-bar a:hover { background-color: #565667; }
+
+    /* Botón "Cambiar tipo de usuario" con estilo más discreto */
+    .switch-profile {
+      background: transparent !important;
+      border: 1px solid rgba(255,255,255,0.25);
+      min-width: auto;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+    .switch-profile:hover {
+      background: rgba(255,255,255,0.08) !important;
     }
 
-    /* Hero Section - Sección verde */
+    /* Hero Section */
     .hero {
       background: url('images/background2.jpg') no-repeat center center;
       background-size: cover;
-      height: 30vh; /* Reducción del tamaño */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-      padding: 20px 10px; /* Menos espacio arriba y abajo */
+      height: 30vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; color: white;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+      padding: 20px 10px;
     }
 
-    /* Ajustes responsivos para móviles */
     @media (max-width: 768px) {
-      .hero {
-        height: 35vh; /* Un poco más alto en móvil para evitar que quede apretado */
-        padding: 15px;
-      }
-
-      .hero h1 {
-        font-size: 1.8rem;
-      }
-
-      .hero p {
-        font-size: 0.9rem;
-      }
+      .hero { height: 35vh; padding: 15px; }
+      .hero h1 { font-size: 1.8rem; }
+      .hero p { font-size: 0.9rem; }
     }
 
     /* Redes sociales */
     .social-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 10px;
+      display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 10px;
     }
-
     .social-buttons a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 6px 10px;
-      border-radius: 5px;
-      color: white;
-      font-size: 13px;
-      width: 130px;
-      gap: 6px;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-weight: bold; padding: 6px 10px; border-radius: 5px;
+      color: white; font-size: 13px; width: 130px; gap: 6px;
       transition: transform 0.2s, box-shadow 0.2s;
     }
-
-    /* Efecto hover */
-    .social-buttons a:hover {
-      transform: scale(1.1);
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .tiktok { background: #000000; }
-    .instagram { background: #E1306C; }
-    .discord { background: #5865F2; }
-    .youtube { background: #FF0000; }
+    .social-buttons a:hover { transform: scale(1.1); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .tiktok { background:#000; } .instagram { background:#E1306C; }
+    .discord { background:#5865F2; } .youtube { background:#FF0000; }
 
     /* Contenido Principal */
-    .content-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      padding: 20px;
-      min-height: 70vh; /* Evita espacios vacíos */
-    }
+    .content-wrapper { display:flex; flex-wrap:wrap; justify-content:space-between; padding:20px; min-height:70vh; }
+    .youtube-section { flex:2; text-align:center; }
+    .sidebar { flex:1; background:#e3e3e3; padding:20px; min-height:300px; border-radius:8px; text-align:center; }
 
-    .youtube-section {
-      flex: 2;
-      text-align: center;
+    /* Estilos del modal */
+    .modal-header {
+      background: #2c2c36; color: #fff;
     }
-
-    .sidebar {
-      flex: 1;
-      background: #e3e3e3;
-      padding: 20px;
-      min-height: 300px;
-      border-radius: 8px;
-      text-align: center;
+    .modal-title i { margin-right: .5rem; }
+    .modal-body p { margin-bottom: 1rem; }
+    .perfil-btn {
+      padding: 12px 18px;
+      font-weight: 600;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -150,28 +116,32 @@
   <!-- Barra de navegación fija -->
   <div class="top-bar">
     <a href="booking.html">Reserva tu Clase Individual</a>
-    <a href="https://www.youtube.com/playlist?list=PLWb26fiXZci1EcLpFe1RWS2AVNw-z4zpE" target="_blank">Accede a Cursos Online</a>
+    <a href="https://www.udemy.com/user/daniel-garcia-1325/" target="_blank">Accede a Cursos Online</a>
     <a href="https://buymeacoffee.com/todosobreia/extras" target="_blank">Descarga Plantillas y Scripts</a>
+    <!-- Enlace para cambiar la elección -->
+    <a href="#" id="clearPerfil" class="switch-profile" title="Cambiar tipo de usuario">
+      <i class="fa-solid fa-user-gear me-1"></i> Cambiar tipo de usuario
+    </a>
   </div>
 
   <!-- Hero Section -->
-  <section class="hero text-center">
+  <section class="hero text-center" aria-label="Cabecera principal">
     <div class="container">
       <h1>Todo Sobre IA</h1>
       <p>Aprende Inteligencia Artificial de forma práctica y personalizada</p>
 
       <!-- Redes sociales -->
-      <div class="social-buttons">
-        <a href="https://www.tiktok.com/@todosobreia_yt" target="_blank" class="tiktok">
+      <div class="social-buttons" aria-label="Redes sociales">
+        <a href="https://www.tiktok.com/@todosobreia_yt" target="_blank" class="tiktok" aria-label="TikTok">
           <i class="fa-brands fa-tiktok"></i> TikTok
         </a>
-        <a href="https://www.instagram.com/todosobreia_yt/" target="_blank" class="instagram">
+        <a href="https://www.instagram.com/todosobreia_yt/" target="_blank" class="instagram" aria-label="Instagram">
           <i class="fa-brands fa-instagram"></i> Instagram
         </a>
-        <a href="https://discord.com/channels/1324413163785031752/1324413164221108317" target="_blank" class="discord">
+        <a href="https://discord.com/channels/1324413163785031752/1324413164221108317" target="_blank" class="discord" aria-label="Discord">
           <i class="fa-brands fa-discord"></i> Discord
         </a>
-        <a href="https://www.youtube.com/@DaniStats" target="_blank" class="youtube">
+        <a href="https://www.youtube.com/@DaniStats" target="_blank" class="youtube" aria-label="YouTube">
           <i class="fa-brands fa-youtube"></i> YouTube
         </a>
       </div>
@@ -183,7 +153,7 @@
     <div class="content-wrapper">
       <div class="youtube-section">
         <h3>📺 Último Video en YouTube</h3>
-        <iframe width="100%" height="315" src="https://www.youtube.com/embed/adhTWmWSjyY" frameborder="0" allowfullscreen></iframe>
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/adhTWmWSjyY" title="Último vídeo de YouTube" frameborder="0" allowfullscreen></iframe>
       </div>
 
       <div class="sidebar">
@@ -193,7 +163,74 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Modal de selección de perfil -->
+  <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow">
+        <div class="modal-header">
+          <h5 class="modal-title" id="perfilModalLabel">
+            <i class="fa-solid fa-user-check"></i> ¿Cómo quieres navegar?
+          </h5>
+        </div>
+        <div class="modal-body">
+          <p>Elige una opción para adaptar el contenido:</p>
+          <div class="d-flex flex-column flex-sm-row gap-3 justify-content-between">
+            <button id="btnParticular" type="button" class="btn btn-success w-100 perfil-btn">
+              <i class="fa-solid fa-user"></i> Soy Particular
+            </button>
+            <button id="btnEmpresa" type="button" class="btn btn-primary w-100 perfil-btn">
+              <i class="fa-solid fa-building"></i> Soy Empresa
+            </button>
+          </div>
+          <small class="d-block mt-3 text-muted">
+            Guardaremos tu elección para las próximas visitas. Puedes cambiarla desde “Cambiar tipo de usuario”.
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Lógica de selección de perfil
+    document.addEventListener('DOMContentLoaded', function () {
+      const perfilGuardado = localStorage.getItem('perfil');
+
+      // Si ya eligió "empresa", redirigimos directamente
+      if (perfilGuardado === 'empresa') {
+        window.location.href = 'empresas.html';
+        return;
+      }
+
+      // Si no hay perfil guardado, mostramos el modal
+      if (!perfilGuardado) {
+        const modal = new bootstrap.Modal(document.getElementById('perfilModal'));
+        modal.show();
+      }
+
+      // Botón "Soy Empresa"
+      document.getElementById('btnEmpresa').addEventListener('click', function () {
+        localStorage.setItem('perfil', 'empresa');
+        window.location.href = 'empresas.html';
+      });
+
+      // Botón "Soy Particular"
+      document.getElementById('btnParticular').addEventListener('click', function () {
+        localStorage.setItem('perfil', 'particular');
+        const modalEl = document.getElementById('perfilModal');
+        const modalInst = bootstrap.Modal.getInstance(modalEl);
+        modalInst.hide();
+      });
+
+      // Enlace para cambiar la elección
+      document.getElementById('clearPerfil').addEventListener('click', function (e) {
+        e.preventDefault();
+        localStorage.removeItem('perfil');
+        const modal = new bootstrap.Modal(document.getElementById('perfilModal'));
+        modal.show();
+      });
+    });
+  </script>
 </body>
 </html>
