@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Todo Sobre IA</title>
 
+  <!-- SEO básico -->
+  <meta name="description" content="Todo Sobre IA — Formación práctica y consultoría. Aprende a usar Inteligencia Artificial, Microsoft Copilot y automatizaciones para aumentar tu productividad y la de tu empresa.">
+
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -62,22 +65,21 @@
     .top-bar a:hover{ box-shadow: var(--glow); border-color: rgba(0,240,255,.35); }
 
     .btn-neon{
-        background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-        border: 1px solid var(--line);
-        color: var(--text);
-        font-weight: 800;
-        border-radius: 12px;
-        transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
-      }
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 12px;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .btn-neon:hover{
+      background: linear-gradient(90deg, var(--acc), var(--acc2));
+      color: #000;
+      box-shadow: 0 12px 28px rgba(138,43,226,.28);
+      border-color: rgba(0,240,255,.35);
+      transform: translateY(-1px) scale(1.01);
+    }
 
-      /* Efecto neón SOLO al hover */
-      .btn-neon:hover{
-        background: linear-gradient(90deg, var(--acc), var(--acc2));
-        color: #000;
-        box-shadow: 0 12px 28px rgba(138,43,226,.28);
-        border-color: rgba(0,240,255,.35);
-        transform: translateY(-1px) scale(1.01);
-      }
     /* ========= Hero ========= */
     .hero{
       background: url('images/background2.jpg') no-repeat center center;
@@ -130,10 +132,14 @@
     .social-buttons a:hover{ transform: translateY(-1px); box-shadow: var(--glow); }
     .social-buttons a span{ display:none; } /* icon-only look */
 
-    /* ========= Contenido ========= */
+    /* ========= Contenido con Grid ========= */
     .content-wrapper{
-      display:flex; flex-wrap:wrap; justify-content:space-between;
-      gap:24px; padding: 24px 0; min-height: 60vh;
+      display: grid;
+      grid-template-columns: minmax(680px, 1fr) minmax(300px, 360px); /* vídeo ancho + sidebar compacta */
+      gap: 24px;
+      align-items: start;
+      padding: 24px 0;
+      min-height: 60vh;
     }
     .youtube-section, .sidebar{
       background: var(--card);
@@ -141,9 +147,6 @@
       border-radius: 16px;
       padding: 20px;
     }
-    .youtube-section{ flex: 2 1 560px; }
-    .sidebar{ flex: 1 1 320px; }
-
     .section-title{
       font-weight: 800; letter-spacing:.3px; margin-bottom: 14px;
       display:flex; align-items:center; gap:10px;
@@ -152,6 +155,46 @@
 
     /* Vídeo responsive con borde sutil */
     .ratio-yt{ border-radius:14px; overflow:hidden; border:1px solid var(--line); }
+
+    /* Meta del vídeo */
+    .video-meta{ margin-top: 14px; }
+    .video-title{ margin: 0 0 6px 0; font-weight: 800; letter-spacing: .2px; }
+    .video-title a{
+      text-decoration: none; color: var(--text);
+      border-bottom: 1px dashed var(--line);
+    }
+    .video-title a:hover{ box-shadow: var(--glow); border-color: rgba(0,240,255,.35); }
+    .video-desc{ color: var(--muted); margin: 0 0 10px 0; }
+    .video-points{ color: var(--muted); margin: 0 0 4px 18px; }
+    .video-points li{ margin-bottom: 6px; }
+
+    /* Cursos (cards con miniatura 16:9) */
+    .course-card{
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius:12px;
+      text-decoration:none; color:var(--text);
+      overflow:hidden; transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      display:block;
+    }
+    .course-card:hover{ transform: translateY(-2px); box-shadow: var(--glow); border-color: rgba(0,240,255,.25); }
+    .course-thumb{ position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; background:#0d1117; }
+    .course-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .course-body{ padding:14px 16px; }
+    .course-title{ margin:0 0 .25rem 0; font-weight:700; line-height:1.25; }
+    .course-desc{ color:var(--muted); margin:0; font-size:.95rem; }
+
+    /* Responsivo */
+    @media (max-width: 1200px){
+      .content-wrapper{
+        grid-template-columns: minmax(620px, 1fr) minmax(280px, 340px);
+      }
+    }
+    @media (max-width: 992px){
+      .content-wrapper{
+        grid-template-columns: 1fr; /* apilar */
+      }
+    }
 
     /* ========= Footer ========= */
     footer{
@@ -166,10 +209,10 @@
   <!-- NAV SUPERIOR -->
   <div class="top-bar">
     <a href="booking.html" class="btn-neon" aria-label="Reservar clase individual"><i class="fa-solid fa-calendar-check"></i> Reserva tu Clase</a>
-    <a href="https://www.udemy.com/user/daniel-garcia-1325/" target="_blank" aria-label="Accede a cursos online"><i class="fa-solid fa-graduation-cap"></i> Cursos Online</a>
+    <a href="https://www.youtube.com/playlist?list=PLWb26fiXZci1EcLpFe1RWS2AVNw-z4zpE" target="_blank" aria-label="Más Cursos"><i class="fa-solid fa-graduation-cap"></i> Cursos Online</a>
     <a href="https://buymeacoffee.com/todosobreia/extras" target="_blank" aria-label="Descarga plantillas y scripts"><i class="fa-solid fa-download"></i> Plantillas & Scripts</a>
     <!-- Botón para pasar a Empresas -->
-    <a href="#" id="btnToEmpresa" class="" title="Cambiar a Empresas" aria-label="Cambiar a Empresas">
+    <a href="#" id="btnToEmpresa" title="Cambiar a Empresas" aria-label="Cambiar a Empresas">
       <i class="fa-solid fa-building"></i> Cambiar a Empresas
     </a>
   </div>
@@ -191,7 +234,7 @@
         <a href="https://discord.com/channels/1324413163785031752/1324413164221108317" target="_blank" title="Discord" aria-label="Discord">
           <i class="fa-brands fa-discord"></i><span>Discord</span>
         </a>
-        <a href="https://www.youtube.com/@DaniStats" target="_blank" title="YouTube" aria-label="YouTube">
+        <a href="https://www.youtube.com/@todosobreia_yt" target="_blank" title="YouTube" aria-label="YouTube">
           <i class="fa-brands fa-youtube"></i><span>YouTube</span>
         </a>
       </div>
@@ -201,23 +244,78 @@
   <!-- CONTENIDO -->
   <div class="container">
     <div class="content-wrapper">
-      <div class="youtube-section">
+      <!-- Vídeo -->
+      <section class="youtube-section">
         <h3 class="section-title"><i class="fa-solid fa-tv"></i> Último Video en YouTube</h3>
         <div class="ratio ratio-16x9 ratio-yt">
-          <iframe src="https://www.youtube.com/embed/adhTWmWSjyY" title="Último video de YouTube" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/kCBh7VvA3UA" title="Último video" allowfullscreen></iframe>
         </div>
-      </div>
 
+        <!-- Título + descripción del vídeo -->
+        <div class="video-meta">
+          <h4 class="video-title">
+            <a href="https://www.youtube.com/watch?v=kCBh7VvA3UA" target="_blank" rel="noopener">
+              Cómo Programar Botones en Excel con IA (Gratis y Sin Saber Código)
+            </a>
+          </h4>
+
+          <p class="video-desc">
+            ¿Quieres aprender a programar botones en Excel con inteligencia artificial sin saber nada de código? En este video descubrirás cómo usar herramientas como ChatGPT, Copilot o Gemini para crear macros en VBA con solo escribir en lenguaje natural. Ideal para principiantes que quieren automatizar Excel fácil, gratis y en español.
+          </p>
+
+          <p class="video-desc"><strong>Aquí aprenderás paso a paso:</strong></p>
+          <ul class="video-points">
+            <li>Cómo crear un botón en Excel VBA desde cero.</li>
+            <li>Qué prompts profesionales usar para que la IA escriba el código por ti.</li>
+            <li>Cómo personalizar tus macros sin tener conocimientos de programación.</li>
+            <li>Trucos para ahorrar tiempo y llevar tu trabajo en Excel al siguiente nivel.</li>
+          </ul>
+
+          <p class="video-desc">
+            Ya no necesitas ser experto en programación: ahora puedes hacer botones en Excel con IA, generar funciones avanzadas, automatizar procesos y aprovechar al máximo ChatGPT, Copilot o cualquier modelo de inteligencia artificial.
+          </p>
+        </div>
+      </section>
+
+      <!-- Sidebar cursos -->
       <aside class="sidebar">
-        <h3 class="section-title"><i class="fa-solid fa-screwdriver-wrench"></i> Espacio en Construcción</h3>
-        <p style="color:var(--muted)">Aquí puedes agregar más información, enlaces o cualquier otro contenido en el futuro.</p>
+        <h3 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Mis Cursos en Udemy</h3>
+
+        <div class="d-flex flex-column gap-3">
+
+          <!-- Curso 1 -->
+          <a class="course-card" href="https://www.udemy.com/course/domina-la-inteligencia-artificial-para-optimizar-tu-trabajo/?referralCode=A34AA10770230A9D4E2D" target="_blank" rel="noopener">
+            <div class="course-thumb">
+              <img src="images/course1.webp" alt="Curso de Inteligencia Artificial para optimizar el trabajo: productividad con IA" loading="lazy" width="640" height="360">
+            </div>
+            <div class="course-body">
+              <h5 class="course-title">Domina la Inteligencia Artificial para Optimizar tu Trabajo</h5>
+              <p class="course-desc">Aprende a usar IA para productividad real: resume PDFs y documentos, crea presentaciones e informes profesionales y académicos, y automatiza tareas del día a día.</p>
+            </div>
+          </a>
+
+          <!-- Curso 2 -->
+          <a class="course-card" href="https://www.udemy.com/course/copilot-para-empresas-y-docentes-de-principiante-a-experto/?referralCode=CABDF29C528B503BF6C9" target="_blank" rel="noopener">
+            <div class="course-thumb">
+              <img src="images/course2.webp" alt="Curso de Microsoft Copilot para empresas: prompts, colaboración y datos con IA" loading="lazy" width="640" height="360">
+            </div>
+            <div class="course-body">
+              <h5 class="course-title">Domina Copilot para Empresas: De Principiante a Experto</h5>
+              <p class="course-desc">Configura Copilot 365 paso a paso, crea prompts efectivos y agentes de IA, y aplica flujos prácticos para colaborar en tiempo real y analizar datos con seguridad.</p>
+            </div>
+          </a>
+
+        </div>
       </aside>
     </div>
   </div>
 
   <!-- FOOTER -->
   <footer class="container text-center py-4">
-    <small>© <span id="year"></span> Todo Sobre IA · <a href="https://www.youtube.com/@DaniStats" target="_blank" rel="noopener">YouTube</a> · <a href="mailto:tuemail@dominio.com">Contacto</a></small>
+    <small>© <span id="year"></span> Todo Sobre IA ·
+      <a href="https://www.youtube.com/@todosobreia_yt" target="_blank" rel="noopener">YouTube</a> ·
+      <a href="mailto:aprendecondanielyt@gmail.com">Contacto</a>
+    </small>
   </footer>
 
   <!-- Scripts -->
@@ -240,6 +338,31 @@
       localStorage.setItem('perfil','empresa');
       window.location.href = 'empresas.html';
     });
+  </script>
+
+  <!-- (Opcional) JSON-LD Course para SEO; cambia el dominio si hospedas en GitHub Pages -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Course",
+        "name": "Domina la Inteligencia Artificial para Optimizar tu Trabajo",
+        "description": "Curso práctico para aumentar la productividad con IA: resúmenes de documentos, creación de presentaciones e informes, y automatización de tareas.",
+        "provider": { "@type": "Organization", "name": "Udemy", "sameAs": "https://www.udemy.com" },
+        "url": "https://www.udemy.com/course/domina-la-inteligencia-artificial-para-optimizar-tu-trabajo/?referralCode=A34AA10770230A9D4E2D",
+        "image": "images/course1.webp"
+      },
+      {
+        "@type": "Course",
+        "name": "Domina Copilot para Empresas: De Principiante a Experto",
+        "description": "Implementa Microsoft Copilot 365, crea prompts efectivos, agentes de IA y flujos seguros para colaborar y analizar datos.",
+        "provider": { "@type": "Organization", "name": "Udemy", "sameAs": "https://www.udemy.com" },
+        "url": "https://www.udemy.com/course/copilot-para-empresas-y-docentes-de-principiante-a-experto/?referralCode=CABDF29C528B503BF6C9",
+        "image": "images/course2.webp"
+      }
+    ]
+  }
   </script>
 </body>
 </html>
